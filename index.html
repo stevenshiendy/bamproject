@@ -133,9 +133,11 @@ body::before {
 .scrollcue .bar { width: 1.5px; height: 44px; background: var(--line); position: relative; overflow: hidden; }
 .scrollcue .bar::after { content: ""; position: absolute; left: 0; right: 0; height: 40%; background: var(--orange); animation: cue 1.8s cubic-bezier(.6,0,.3,1) infinite; }
 @media (max-width: 700px) {
-  .hero { min-height: 68svh; }
-  .hero-inner { padding-block: 104px 32px; gap: 22px; }
-  .hero h1 { font-size: 17vw; }
+  .hero { align-items: stretch; }
+  .hero-inner { display: flex; flex-direction: column; padding-block: 104px 32px; gap: 22px; }
+  .hero h1 { font-size: 17vw; margin-top: auto; }
+  .hero-foot { display: contents; }
+  .hero .scrollcue { margin-top: auto; }
 }
 @keyframes cue { from { transform: translateY(-100%); } to { transform: translateY(260%); } }
 
@@ -219,9 +221,9 @@ body::before {
 .rows { isolation: isolate; position: relative; }
 .row h3 { margin: 0; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(44px, 7vw, 112px); line-height: .9; transition: color .35s, transform .5s cubic-bezier(.2,.7,.2,1); }
 .row p { margin: 0; font-size: clamp(16px, 1.4vw, 19px); max-width: 42ch; color: rgba(244,238,225,.8); transition: color .35s; }
-.row:hover::before { transform: scaleY(1); }
-.row:hover h3 { color: var(--ink); transform: translateX(12px); }
-.row:hover p { color: var(--ink); }
+.row.on::before { transform: scaleY(1); }
+.row.on h3 { color: var(--ink); transform: translateX(12px); }
+.row.on p { color: var(--ink); }
 @media (max-width: 700px) { .row { grid-template-columns: 1fr; } }
 
 /* STAT */
@@ -621,6 +623,14 @@ footer .flogo { height: 44px; width: auto; }
     draw(t0 + 1800);
   }
   Array.prototype.forEach.call(document.querySelectorAll("canvas.fx"), fx);
+
+  // MISSION: light up the row crossing the middle of the screen
+  if ("IntersectionObserver" in window) {
+    var rowIO = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { e.target.classList.toggle("on", e.isIntersecting); });
+    }, { rootMargin: "-50% 0px -50% 0px" });
+    Array.prototype.forEach.call(document.querySelectorAll(".row"), function (r) { rowIO.observe(r); });
+  }
 
   if (reduce || !window.gsap || !window.ScrollTrigger) return;
   gsap.registerPlugin(ScrollTrigger);
