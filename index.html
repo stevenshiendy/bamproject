@@ -1,0 +1,729 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="BAM! Bacotan Anak Muda. A youth media and brand group from Bandung. Talk Loud, Build Louder.">
+<link rel="icon" href="assets/bam-mark.png">
+<style>body{margin:0}</style>
+<title>BAM! Group</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wdth,wght@62..125,400..900&family=Plus+Jakarta+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap">
+<style>
+/* Layout: full-bleed scroll story. Pinned chapters (claim, name, vision, brands) between free-scrolling bands. Dark-first, single look by brand choice. */
+:root {
+  --ink: #0d0d0d;
+  --ink-2: #181716;
+  --cream: #f4eee1;
+  --dim: #6f6a62;
+  --orange: #ff5a00;
+  --yellow: #ffe600;
+  --line: rgba(244, 238, 225, .14);
+  --display: "Anton", "Impact", "Arial Narrow", sans-serif;
+  --wordmark: "Archivo", "Arial Black", sans-serif;
+  --body: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "Space Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --gutter: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+  --pad: clamp(16px, 4vw, 56px);
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  color-scheme: dark;
+}
+.grain::before { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: .09; mix-blend-mode: overlay; pointer-events: none; z-index: 1; }
+canvas.fx { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+* { box-sizing: border-box; }
+html { background: var(--ink); }
+body {
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.55;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+::selection { background: var(--orange); color: var(--ink); }
+:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; border-radius: 4px; }
+
+.wrap {
+  padding-left: max(var(--pad), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--pad), env(safe-area-inset-right, 0px));
+}
+.label {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+.wordmark {
+  font-family: var(--wordmark);
+  font-weight: 900;
+  font-variation-settings: "wdth" 112;
+  letter-spacing: -.02em;
+}
+.wordmark i { font-style: normal; color: var(--orange); }
+
+/* progress + nav */
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 60; background: var(--ink);
+}
+.progress {
+  position: fixed; left: 0; right: 0; top: env(safe-area-inset-top, 0px); height: 3px;
+  background: var(--orange); transform-origin: 0 50%; transform: scaleX(0); z-index: 61;
+}
+.nav {
+  position: fixed; left: 0; right: 0; top: env(safe-area-inset-top, 0px); z-index: 50;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding-block: 18px;
+  padding-left: max(var(--pad), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--pad), env(safe-area-inset-right, 0px));
+  transition: transform .45s cubic-bezier(.2,.7,.2,1), background .3s;
+}
+.nav.scrolled { background: rgba(13, 13, 13, .72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.nav.hide { transform: translateY(-110%); }
+.nav .logo-link { display: block; line-height: 0; }
+.nav .logo-link img { height: 24px; width: auto; }
+.nav ul { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; font-size: 14px; font-weight: 500; }
+.nav ul a { text-decoration: none; opacity: .75; transition: opacity .2s; }
+.nav ul a:hover { opacity: 1; }
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--body); font-weight: 700; font-size: 15px;
+  padding: 13px 22px; border-radius: 999px; text-decoration: none;
+  background: var(--orange); color: var(--ink); border: 0; cursor: pointer;
+  transition: transform .25s cubic-bezier(.2,.7,.2,1), background .25s;
+}
+.btn:hover { transform: translateY(-2px); background: var(--yellow); }
+.btn.ghost { background: transparent; color: var(--cream); box-shadow: inset 0 0 0 1.5px var(--cream); }
+.btn.ghost:hover { background: var(--cream); color: var(--ink); }
+.btn .arrow { transition: transform .25s; }
+.btn:hover .arrow { transform: translateX(4px); }
+.nav .btn { padding: 10px 18px; font-size: 14px; }
+@media (max-width: 760px) { .nav ul { display: none; } }
+
+/* HERO */
+.hero {
+  position: relative; min-height: 100svh; display: grid; align-items: end;
+  overflow: hidden; isolation: isolate;
+}
+.hero-media { position: absolute; inset: 0; z-index: -1; }
+.hero-media { background: var(--ink); }
+.hero-media::after {
+  content: ""; position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(180deg, transparent 55%, var(--ink) 100%);
+}
+.hero-inner { padding-block: 120px clamp(28px, 6vh, 64px); display: grid; gap: 28px; }
+.hero h1 {
+  margin: 0; font-family: var(--display); font-weight: 400; text-transform: uppercase;
+  font-size: clamp(64px, 15.5vw, 260px); line-height: .86; letter-spacing: -.005em;
+}
+.hero h1 .ln { display: block; overflow: hidden; padding-bottom: .02em; }
+.hero h1 .ln > span { display: inline-block; }
+.hero h1 .hot { color: var(--orange); }
+.hero-foot { display: flex; flex-wrap: wrap; gap: 20px 40px; align-items: end; justify-content: space-between; }
+.hero-foot p { margin: 0; max-width: 34ch; font-size: clamp(17px, 1.6vw, 21px); color: rgba(244,238,225,.88); }
+.hero-foot .label { color: var(--cream); opacity: .7; }
+.scrollcue { display: flex; align-items: center; gap: 12px; }
+.scrollcue .bar { width: 1.5px; height: 44px; background: var(--line); position: relative; overflow: hidden; }
+.scrollcue .bar::after { content: ""; position: absolute; left: 0; right: 0; height: 40%; background: var(--orange); animation: cue 1.8s cubic-bezier(.6,0,.3,1) infinite; }
+@keyframes cue { from { transform: translateY(-100%); } to { transform: translateY(260%); } }
+
+/* CLAIM: the line they say */
+.claim { position: relative; }
+.claim-stage { min-height: 100svh; display: grid; place-content: center; gap: 32px; padding-block: 96px; }
+.claim .label { text-align: left; }
+.quote {
+  position: relative; margin: 0; max-width: 16ch;
+  font-family: var(--display); text-transform: uppercase; font-weight: 400;
+  font-size: clamp(44px, 8.4vw, 136px); line-height: .95;
+}
+.quote .w { color: var(--cream); opacity: .22; display: inline-block; }
+.strike {
+  position: absolute; left: -2%; right: -2%; top: 52%; height: clamp(8px, 1.1vw, 16px);
+  background: var(--orange); transform: scaleX(0) rotate(-3deg); transform-origin: 0 50%;
+}
+.answer {
+  font-family: var(--display); text-transform: uppercase;
+  font-size: clamp(40px, 7vw, 112px); line-height: .95; margin: 0; color: var(--orange);
+}
+.answer span { display: inline-block; }
+.claim small { font-family: var(--mono); font-size: 12px; color: var(--dim); letter-spacing: .08em; }
+
+/* NAME */
+.name { background: var(--orange); color: var(--ink); overflow: hidden; }
+.name-stage { min-height: 100svh; display: grid; align-content: center; gap: clamp(24px, 5vh, 56px); padding-block: 96px; }
+.name .label { color: var(--ink); }
+.acro {
+  font-family: var(--display); text-transform: uppercase; white-space: nowrap;
+  font-size: clamp(34px, 9.6vw, 180px); line-height: .9; margin: 0;
+  display: flex; align-items: baseline; transform-origin: 0 100%;
+}
+.acro .cap { display: inline-block; }
+.acro .rest { display: inline-block; overflow: hidden; vertical-align: bottom; white-space: pre; }
+.acro .bang { color: var(--cream); }
+.name-copy { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 24px 48px; max-width: 980px; }
+.name-copy p { margin: 0; font-size: clamp(17px, 1.5vw, 20px); font-weight: 500; }
+.name-copy em { font-style: normal; font-weight: 700; }
+
+/* VISION */
+.vision { position: relative; }
+.vision-stage { position: relative; height: 100svh; overflow: hidden; display: grid; place-items: center; }
+.vision-media { position: absolute; inset: 0; clip-path: inset(16% 20% 16% 20% round 28px); will-change: clip-path; background: var(--orange); }
+.vision-text .label { color: var(--ink); }
+.vision-text h2 { color: var(--ink); }
+.vision-text h2 .o { color: var(--cream); background: var(--ink); padding: 0 .1em; }
+.vision-text {
+  position: relative; z-index: 2; width: 100%;
+  display: grid; justify-items: end; text-align: right; gap: 20px;
+}
+.vision-text h2 {
+  margin: 0; max-width: 12ch;
+  font-family: var(--display); text-transform: uppercase; font-weight: 400;
+  font-size: clamp(42px, 7.6vw, 128px); line-height: .92; text-wrap: balance;
+}
+.vision-text h2 .w { display: inline-block; opacity: 0.12; }
+.vision-text h2 .o { color: var(--orange); }
+@media (max-width: 700px) {
+  .vision-text { justify-items: start; text-align: left; align-self: end; padding-bottom: 64px; }
+}
+
+/* MISSION */
+.mission { padding-block: clamp(96px, 16vh, 180px); display: grid; gap: 48px; }
+.mission-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px 40px; }
+.mission-head h2 { margin: 0; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(36px, 5vw, 72px); line-height: .95; max-width: 14ch; }
+.mission-head p { margin: 0; max-width: 40ch; color: rgba(244,238,225,.7); }
+.rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.row {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 12px 40px; align-items: center;
+  padding-block: clamp(20px, 3vw, 34px); border-bottom: 1px solid var(--line);
+  position: relative; overflow: hidden;
+}
+.row::before { content: ""; position: absolute; inset: 0; background: var(--orange); transform: scaleY(0); transform-origin: 50% 100%; transition: transform .5s cubic-bezier(.2,.7,.2,1); z-index: -1; }
+.rows { isolation: isolate; position: relative; }
+.row h3 { margin: 0; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(44px, 7vw, 112px); line-height: .9; transition: color .35s, transform .5s cubic-bezier(.2,.7,.2,1); }
+.row p { margin: 0; font-size: clamp(16px, 1.4vw, 19px); max-width: 42ch; color: rgba(244,238,225,.8); transition: color .35s; }
+.row:hover::before { transform: scaleY(1); }
+.row:hover h3 { color: var(--ink); transform: translateX(12px); }
+.row:hover p { color: var(--ink); }
+@media (max-width: 700px) { .row { grid-template-columns: 1fr; } }
+
+/* STAT */
+.stat { padding-block: clamp(80px, 14vh, 160px); border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 32px 56px; align-items: end; }
+.stat .num { font-family: var(--display); font-size: clamp(110px, 24vw, 380px); line-height: .8; color: var(--orange); font-variant-numeric: tabular-nums; margin: 0; white-space: nowrap; }
+.stat .num sup { font-size: .4em; vertical-align: top; position: relative; top: .12em; margin-left: .04em; }
+.stat .copy { display: grid; gap: 18px; padding-bottom: 1vw; }
+.stat .copy p { margin: 0; font-size: clamp(20px, 2vw, 28px); line-height: 1.3; font-weight: 500; max-width: 24ch; }
+.stat .copy .src { font-family: var(--mono); font-size: 12px; color: var(--dim); }
+@media (max-width: 800px) { .stat { grid-template-columns: 1fr; } }
+
+/* BRANDS: horizontal track */
+.brands { position: relative; overflow: hidden; }
+.brands-stage { height: 100svh; display: flex; align-items: center; }
+.track { display: flex; gap: clamp(14px, 2vw, 28px); padding-left: max(var(--pad), env(safe-area-inset-left, 0px)); padding-right: max(var(--pad), env(safe-area-inset-right, 0px)); will-change: transform; }
+.panel {
+  flex: 0 0 auto; width: min(82vw, 760px); height: min(74svh, 620px);
+  border-radius: 28px; padding: clamp(24px, 3.4vw, 44px);
+  display: flex; flex-direction: column; justify-content: space-between; gap: 24px;
+  position: relative; overflow: hidden;
+}
+.panel.intro { width: min(82vw, 560px); background: transparent; padding-left: 0; justify-content: center; }
+.panel.intro h2 { margin: 0; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(52px, 7vw, 116px); line-height: .9; }
+.panel.intro p { margin: 0; max-width: 32ch; color: rgba(244,238,225,.75); font-size: 18px; }
+.panel .top { display: flex; justify-content: space-between; align-items: start; gap: 16px; }
+.badge { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; padding: 7px 12px; border-radius: 999px; box-shadow: inset 0 0 0 1.2px currentColor; white-space: nowrap; }
+.panel .where { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; opacity: .75; text-align: right; }
+.panel .logo { flex: 1; position: relative; min-height: 0; }
+.panel .logo img { position: absolute; inset: 0; margin: auto; width: auto; height: auto; max-height: 100%; max-width: 78%; object-fit: contain; transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+.panel:hover .logo img { transform: scale(1.05); }
+.panel .bottom { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: end; }
+.panel .bottom h3 { margin: 0; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(30px, 3.4vw, 48px); line-height: 1; }
+.panel .bottom p { margin: 6px 0 0; max-width: 38ch; font-size: 16px; opacity: .85; }
+.p-fomo { background: #0f3b1c; color: #f4eee1; }
+.p-fomo .logo img { max-height: 78%; }
+.p-hana { background: #f6e3da; color: #1a0f0d; }
+.p-hana .logo img { max-height: 100%; }
+.p-hana .badge { color: #c8161d; }
+.p-next { background: var(--orange); color: var(--ink); }
+.p-next .big { font-family: var(--display); text-transform: uppercase; font-size: clamp(56px, 8.2vw, 136px); line-height: .88; margin: 0; }
+.p-next .big span { display: block; }
+.p-next .big .q { color: var(--cream); }
+.p-next .bottom p { opacity: 1; font-weight: 500; }
+.p-next .btn { background: var(--ink); color: var(--cream); }
+.p-next .btn:hover { background: var(--cream); color: var(--ink); }
+@media (max-width: 600px) {
+  .panel .bottom { grid-template-columns: 1fr; }
+}
+
+/* FUTURE */
+.future { padding-block: clamp(96px, 16vh, 180px); display: grid; gap: 48px; }
+.future-head { display: grid; gap: 16px; }
+.future-head h2 { margin: 0; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(44px, 7vw, 112px); line-height: .9; }
+.grid4 { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 20px); }
+.card {
+  position: relative; overflow: hidden; border-radius: 22px; padding: clamp(22px, 2.6vw, 34px);
+  background: var(--ink-2); box-shadow: inset 0 0 0 1px var(--line);
+  min-height: 300px; display: flex; flex-direction: column; justify-content: space-between; gap: 40px;
+  transition: transform .5s cubic-bezier(.2,.7,.2,1);
+}
+.card:hover { transform: translateY(-6px); }
+.card h3 { margin: 0; font-family: var(--wordmark); font-weight: 900; font-variation-settings: "wdth" 100; font-size: clamp(26px, 2.6vw, 38px); line-height: 1; letter-spacing: -.02em; }
+.card h3 i { font-style: normal; color: var(--orange); }
+.card p { margin: 10px 0 0; color: rgba(244,238,225,.75); max-width: 36ch; }
+.card .tag { align-self: start; }
+.c-impact { grid-column: span 7; min-height: 460px; box-shadow: none;
+  background: radial-gradient(90% 80% at 100% 100%, #ff5a00 0%, #a32a00 35%, #2a0b02 70%, #140603 100%); }
+.c-impact .fig { font-family: var(--display); font-size: clamp(64px, 9vw, 140px); line-height: .85; color: var(--cream); margin: 0; transition: transform .8s cubic-bezier(.2,.7,.2,1); transform-origin: 0 100%; }
+.c-impact .fig small { display: block; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; line-height: 1.5; color: rgba(244,238,225,.75); margin-top: 10px; }
+.c-impact:hover .fig { transform: scale(1.04); }
+.c-impact > * { position: relative; z-index: 2; }
+.c-impact p { color: rgba(244,238,225,.9); }
+.c-stage { grid-column: span 5; background: var(--yellow); color: var(--ink); box-shadow: none; }
+.c-stage h3 i { color: var(--ink); }
+.c-stage p { color: rgba(13,13,13,.78); }
+.c-stage .label { color: var(--ink); }
+.c-coll { grid-column: span 5; }
+.c-more { grid-column: span 7; }
+.c-more .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-size: 14px; font-weight: 500; padding: 8px 14px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--line); }
+.chip.on { background: var(--cream); color: var(--ink); box-shadow: none; }
+@media (max-width: 860px) { .c-impact, .c-stage, .c-coll, .c-more { grid-column: span 12; } }
+
+/* FOUNDERS */
+.founders { padding-block: clamp(80px, 14vh, 160px); border-top: 1px solid var(--line); display: grid; gap: 40px; }
+.founders-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px 40px; align-items: end; }
+.founders-head h2 { margin: 0; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(36px, 5vw, 72px); line-height: .95; }
+.founders-head p { margin: 0; max-width: 40ch; color: rgba(244,238,225,.7); }
+.people { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 0 40px; }
+.person { border-top: 1px solid var(--line); padding-block: 26px; display: grid; gap: 10px; }
+.person .role { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--orange); }
+.person .nm { font-family: var(--wordmark); font-weight: 900; font-variation-settings: "wdth" 80; text-transform: uppercase; font-size: clamp(38px, 4.6vw, 72px); line-height: .92; letter-spacing: -.01em; transition: font-variation-settings .6s cubic-bezier(.2,.7,.2,1), color .3s; }
+.person:hover .nm { font-variation-settings: "wdth" 112; color: var(--orange); }
+.person p { margin: 0; color: rgba(244,238,225,.7); max-width: 40ch; }
+
+/* CTA */
+.cta { position: relative; overflow: hidden; isolation: isolate; min-height: 100svh; display: grid; align-items: end; }
+.cta { background: var(--ink); color: var(--cream); }
+.cta-media { position: absolute; inset: 0; z-index: -1; }
+.cta-media::after { content: ""; position: absolute; inset: 0; z-index: 2; background: linear-gradient(180deg, var(--ink) 0%, transparent 30%); }
+.cta h2 .stretch { display: block; font-family: var(--wordmark); font-weight: 900; font-variation-settings: "wdth" 62; color: var(--orange); font-size: 1.25em; line-height: .9; letter-spacing: -.01em; white-space: nowrap; }
+.cta-inner { padding-block: 140px clamp(40px, 8vh, 80px); display: grid; gap: 28px; }
+.cta h2 { margin: 0; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(40px, 11vw, 200px); line-height: .92; }
+.cta h2 .ln { display: block; overflow: hidden; }
+.cta h2 .ln > span { display: inline-block; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 20px 32px; justify-content: space-between; align-items: end; }
+.cta-row p { margin: 0; max-width: 40ch; font-size: clamp(17px, 1.5vw, 20px); color: rgba(244,238,225,.88); }
+.cta-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.contacts { display: flex; flex-wrap: wrap; gap: 10px 28px; font-family: var(--mono); font-size: 13px; color: rgba(244,238,225,.75); }
+.contacts span b { color: var(--cream); font-weight: 700; }
+
+footer { border-top: 1px solid var(--line); padding-block: 28px 36px; display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between; align-items: center; font-size: 13px; color: var(--dim); }
+footer .flogo { height: 44px; width: auto; }
+
+.placeholder-note { color: var(--yellow); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .quote .w, .vision-text h2 .w { opacity: 1 !important; }
+  .vision-media { clip-path: none !important; }
+}
+</style>
+
+</head>
+<body>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <a href="#top" class="logo-link" aria-label="BAM! home"><img src="assets/bam-mark.png" alt="BAM!" width="900" height="188"></a>
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="#name">The name</a></li>
+      <li><a href="#vision">Vision</a></li>
+      <li><a href="#brands">Brands</a></li>
+      <li><a href="#next">What's next</a></li>
+    </ul>
+  </nav>
+  <a href="#join" class="btn">Join the movement</a>
+</header>
+
+<main id="top">
+
+  <!-- 1. HERO -->
+  <section class="hero" aria-label="Intro">
+    <div class="hero-media grain"><canvas class="fx" data-fx="glow" data-x=".78" data-y=".38" data-color="255,90,0" aria-hidden="true"></canvas></div>
+    <div class="hero-inner wrap">
+      <h1>
+        <span class="ln"><span>Talk loud.</span></span>
+        <span class="ln"><span>Build <span class="hot">louder.</span></span></span>
+      </h1>
+      <div class="hero-foot">
+        <p>BAM! is a youth media and brand group from Bandung, built by young people who would rather show than tell.</p>
+        <div class="scrollcue label"><span class="bar" aria-hidden="true"></span> Scroll</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. CLAIM -->
+  <section class="claim" id="claim" aria-label="What they say about us">
+    <div class="claim-stage wrap">
+      <span class="label">What we keep hearing</span>
+      <p class="quote" id="quote">
+        <span class="w">&ldquo;Anak</span> <span class="w">muda</span> <span class="w">banyak</span> <span class="w">bacot,</span> <span class="w">nggak</span> <span class="w">ada</span> <span class="w">hasil.&rdquo;</span>
+        <span class="strike" aria-hidden="true"></span>
+      </p>
+      <p class="answer" id="answer"><span>So we built</span> <span>something.</span></p>
+      <small>Translation: young people talk a lot and deliver nothing.</small>
+    </div>
+  </section>
+
+  <!-- 3. NAME -->
+  <section class="name" id="name" aria-label="The name">
+    <div class="name-stage wrap">
+      <span class="label">The name</span>
+      <h2 class="acro" id="acro" aria-label="BAM! stands for Bacotan Anak Muda">
+        <span class="cap">B</span><span class="rest">acotan&nbsp;</span><span class="cap">A</span><span class="rest">nak&nbsp;</span><span class="cap">M</span><span class="rest">uda</span><span class="bang">!</span>
+      </h2>
+      <div class="name-copy">
+        <p><em>Bacotan Anak Muda.</em> The loud talk of young people. We took the insult and made it the name.</p>
+        <p>And <em>BAM!</em> is the sound of impact. Sudden, loud, impossible to ignore. That is how we want every project to land.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. VISION -->
+  <section class="vision" id="vision" aria-label="Vision">
+    <div class="vision-stage">
+      <div class="vision-media grain"><canvas class="fx" data-fx="bars" data-color="13,13,13" aria-hidden="true"></canvas></div>
+      <div class="vision-text wrap">
+        <span class="label">Our vision</span>
+        <h2 id="visionH"><span class="w">Turning</span> <span class="w">young</span> <span class="w">voices</span> <span class="w">into</span> <span class="w">the</span> <span class="w">nation's</span> <span class="w o">momentum.</span></h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. MISSION -->
+  <section class="mission wrap" aria-label="Mission">
+    <div class="mission-head">
+      <h2>Four things we do, loudly</h2>
+      <p>Talk is where it starts. These are the parts where it turns into something you can visit, taste, watch and join.</p>
+    </div>
+    <ul class="rows">
+      <li class="row reveal"><h3>Build</h3><p>Grow brands led by young people, across every industry worth entering.</p></li>
+      <li class="row reveal"><h3>Create</h3><p>Make bold, fun content that proves young ideas deliver real results.</p></li>
+      <li class="row reveal"><h3>Amplify</h3><p>Give young creators and founders a stage big enough to be heard.</p></li>
+      <li class="row reveal"><h3>Impact</h3><p>Drive change with NGOs and non-profits through campaigns aligned with the SDGs.</p></li>
+    </ul>
+  </section>
+
+  <!-- 6. STAT -->
+  <section class="stat wrap" aria-label="Why it matters">
+    <p class="num"><span id="count">53.8</span><sup>%</sup></p>
+    <div class="copy">
+      <span class="label">Why now</span>
+      <p>of Indonesians are Gen Z or millennials. More than half the country, and still called all talk.</p>
+      <span class="src">Source: BPS, Sensus Penduduk 2020 (Gen Z 27.94% + Millennials 25.87%)</span>
+    </div>
+  </section>
+
+  <!-- 7. BRANDS -->
+  <section class="brands" id="brands" aria-label="Our brands">
+    <div class="brands-stage">
+      <div class="track" id="track">
+        <div class="panel intro">
+          <span class="label">The proof</span>
+          <h2>Real brands. Real counters. Real customers.</h2>
+          <p>BAM! runs the media and creative engine behind the brands under its roof. Each one keeps its own look. BAM! keeps the volume up.</p>
+        </div>
+
+        <article class="panel p-fomo">
+          <div class="top"><span class="badge">a BAM! brand</span><span class="where">Coffee shop<br>Papaya Fresh Gallery, Bandung</span></div>
+          <div class="logo"><img src="assets/fomo.png" alt="FOMO Prime logo"></div>
+          <div class="bottom"><div><h3>FOMO Prime</h3><p>A daily hangout built around the fear of missing out. Good coffee, better company.</p></div></div>
+        </article>
+
+        <article class="panel p-hana">
+          <div class="top"><span class="badge">a BAM! brand</span><span class="where">Choux pastry<br>Offline outlet</span></div>
+          <div class="logo"><img src="assets/hanashuya.png" alt="Hanashuya logo, a red rose above the name"></div>
+          <div class="bottom"><div><h3>Hanashuya</h3><p>Crafted choux with a young, playful personality.</p></div></div>
+        </article>
+
+        <article class="panel p-next">
+          <div class="top"><span class="badge">Coming soon</span><span class="where">Food. Lifestyle.<br>Entertainment.</span></div>
+          <p class="big"><span>Your brand</span><span class="q">next?</span></p>
+          <div class="bottom"><p>More brands across more industries, all under one vision.</p><a href="#join" class="btn">Build with us <span class="arrow" aria-hidden="true">&rarr;</span></a></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. FUTURE -->
+  <section class="future wrap" id="next" aria-label="What's next">
+    <div class="future-head">
+      <span class="label">What's next</span>
+      <h2>Louder from here</h2>
+    </div>
+    <div class="grid4">
+      <article class="card c-impact grain reveal">
+        <span class="label tag" style="color: var(--cream)">SDG campaigns</span>
+        <p class="fig">202.000+ ha<small>of forest and land burned in Indonesia, January to July 2026. Source: The Nation</small></p>
+        <div><h3>BAM<i>!</i> Impact</h3><p>Campaigns with NGOs and non-profits on the issues our generation will inherit, starting with the forest fires.</p></div>
+      </article>
+      <article class="card c-stage reveal">
+        <span class="label tag">Events</span>
+        <div><h3>BAM<i>!</i> Stage</h3><p>Talks, events and pop-ups that put young founders and creators in front of a crowd.</p></div>
+      </article>
+      <article class="card c-coll reveal">
+        <span class="label tag">Network</span>
+        <div><h3>BAM<i>!</i> Collective</h3><p>A network of young creatives who make BAM! projects happen.</p></div>
+      </article>
+      <article class="card c-more reveal">
+        <span class="label tag">Portfolio</span>
+        <div class="chips" aria-label="Industries">
+          <span class="chip on">Food &amp; beverage</span><span class="chip">Lifestyle</span><span class="chip">Entertainment</span><span class="chip">Fashion</span><span class="chip">Tech</span><span class="chip">And beyond</span>
+        </div>
+        <div><h3>More brands<i>.</i></h3><p>New brands across industries, each one built and run by young people.</p></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 9. FOUNDERS -->
+  <section class="founders wrap" aria-label="Founders">
+    <div class="founders-head">
+      <h2>The loud ones</h2>
+      <p>Two young founders from Bandung who already run real businesses.</p>
+    </div>
+    <div class="people">
+      <div class="person reveal"><span class="role">Chief Executive Officer</span><span class="nm">Steven Glenn Shiendy</span></div>
+      <div class="person reveal"><span class="role">Chief Marketing Officer</span><span class="nm">Reyner Jandarmala</span></div>
+    </div>
+  </section>
+
+  <!-- 10. CTA -->
+  <section class="cta" id="join" aria-label="Join us">
+    <div class="cta-media grain"><canvas class="fx" data-fx="glow" data-x=".8" data-y=".75" data-color="255,90,0" aria-hidden="true"></canvas></div>
+    <div class="cta-inner wrap">
+      <span class="label">Join the movement</span>
+      <h2 id="ctaH">
+        <span class="ln"><span>Ngomong gede.</span></span>
+        <span class="ln"><span>Kerja harus lebih</span></span>
+        <span class="ln"><span class="stretch" id="stretch" aria-label="Gede.">Ged<span id="es">e</span>.</span></span>
+      </h2>
+      <div class="cta-row">
+        <p>Collaborate with us, partner with our brands, or bring your own loud idea. We will help you build it.</p>
+        <div class="cta-actions">
+          <a class="btn" href="#join">Partner with us <span class="arrow" aria-hidden="true">&rarr;</span></a>
+          <a class="btn ghost" href="#brands">See our brands</a>
+        </div>
+      </div>
+      <div class="contacts">
+        <span><b>Instagram</b> @bam.group <span class="placeholder-note">(placeholder)</span></span>
+        <span><b>Email</b> hello@bamgroup.id <span class="placeholder-note">(placeholder)</span></span>
+        <span><b>Based in</b> Bandung, Indonesia</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <img class="flogo" src="assets/bam-logo-tag.png" alt="BAM! Bacotan Anak Muda" width="900" height="266">
+  <span>Talk Loud, Build Louder.</span>
+  <span>&copy; 2026 BAM! Group, Bandung</span>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function () {
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var nav = document.getElementById("nav");
+  var bar = document.querySelector(".progress");
+  var lastY = 0;
+
+  function onScroll() {
+    var y = window.scrollY;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.transform = "scaleX(" + (max > 0 ? y / max : 0) + ")";
+    nav.classList.toggle("scrolled", y > 40);
+    nav.classList.toggle("hide", y > lastY && y > 400);
+    lastY = y;
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  // FX: drifting warm light and a voice waveform, drawn on canvas
+  function fx(canvas) {
+    var ctx = canvas.getContext("2d"), kind = canvas.dataset.fx, rgb = canvas.dataset.color;
+    var cx = parseFloat(canvas.dataset.x || .5), cy = parseFloat(canvas.dataset.y || .5);
+    var w = 0, h = 0, dpr = 1, running = false, t0 = performance.now();
+    function size() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = canvas.clientWidth; h = canvas.clientHeight;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function glow(t) {
+      // slow, drifting stage light: three warm pools that breathe across the frame
+      var pools = [[cx, cy, .62, 0], [cx - .35, cy + .35, .45, 2.1], [cx - .1, cy - .25, .38, 4.2]];
+      for (var k = 0; k < pools.length; k++) {
+        var pp = pools[k], ph = t / 9000 + pp[3];
+        var x = w * (pp[0] + Math.sin(ph) * .08), y = h * (pp[1] + Math.cos(ph * .8) * .07);
+        var r = Math.max(w, h) * pp[2] * (1 + Math.sin(ph * 1.3) * .06);
+        var g = ctx.createRadialGradient(x, y, 0, x, y, r);
+        g.addColorStop(0, "rgba(" + rgb + "," + (k ? .28 : .5) + ")");
+        g.addColorStop(1, "rgba(" + rgb + ",0)");
+        ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+      }
+    }
+    function bars(t) {
+      var gap = Math.max(6, w / 120), bw = gap * .55, mid = h * .5, n = Math.ceil(w / gap);
+      ctx.fillStyle = "rgba(" + rgb + ",.22)";
+      for (var i = 0; i < n; i++) {
+        var u = i / n;
+        var env = Math.sin(Math.PI * u) * .8 + .2;
+        var v = (Math.sin(u * 23 + t / 420) * .5 + Math.sin(u * 61 - t / 260) * .3 + Math.sin(u * 7 + t / 900) * .2);
+        var bh = Math.max(4, Math.abs(v) * env * h * .42);
+        var rr = bw / 2;
+        ctx.beginPath();
+        if (ctx.roundRect) ctx.roundRect(i * gap, mid - bh, bw, bh * 2, rr); else ctx.rect(i * gap, mid - bh, bw, bh * 2);
+        ctx.fill();
+      }
+    }
+    function draw(now) {
+      ctx.clearRect(0, 0, w, h);
+      (kind === "bars" ? bars : glow)(now - t0);
+      if (running) requestAnimationFrame(draw);
+    }
+    size();
+    window.addEventListener("resize", function () { size(); if (!running) draw(t0 + 1800); });
+    if (reduce || !("IntersectionObserver" in window)) { draw(t0 + 1800); return; }
+    new IntersectionObserver(function (es) {
+      var vis = es[0].isIntersecting;
+      if (vis && !running) { running = true; requestAnimationFrame(draw); }
+      else if (!vis) running = false;
+    }).observe(canvas);
+    draw(t0 + 1800);
+  }
+  Array.prototype.forEach.call(document.querySelectorAll("canvas.fx"), fx);
+
+  if (reduce || !window.gsap || !window.ScrollTrigger) return;
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true });
+  var ease = "power3.out";
+
+  // HERO: load sequence, then scroll parallax
+  gsap.from(".hero h1 .ln > span", { yPercent: 110, duration: 1.1, ease: "power4.out", stagger: .12, delay: .15 });
+  gsap.from(".hero-foot > *", { y: 24, opacity: 0, duration: .9, ease: ease, stagger: .1, delay: .6 });
+  gsap.from(".hero-media", { opacity: 0, duration: 1.6, ease: "power2.out" });
+  gsap.to(".hero-media", { yPercent: 14, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+  gsap.to(".hero-inner", { yPercent: -18, opacity: .2, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+
+  // CLAIM: words light up, the line gets struck, the answer lands
+  var claimTl = gsap.timeline({ scrollTrigger: { trigger: ".claim", start: "top top", end: "+=180%", pin: ".claim-stage", scrub: .6 } });
+  claimTl.to("#quote .w", { opacity: 1, stagger: .25, duration: .6, ease: "none" })
+         .to(".strike", { scaleX: 1, duration: 1, ease: "power2.inOut" }, "+=.2")
+         .to("#quote .w", { opacity: .5, duration: .6 }, "<.4")
+         .from("#answer span", { yPercent: 60, opacity: 0, stagger: .2, duration: .8, ease: ease }, "-=.1")
+         .to({}, { duration: .6 });
+
+  // NAME: BAM! unfolds into Bacotan Anak Muda
+  var acro = document.getElementById("acro");
+  var rests = acro.querySelectorAll(".rest");
+  var fixed = acro.querySelectorAll(".cap, .bang");
+  var widths = [], collapsed = 1;
+  function measure() {
+    gsap.set(rests, { width: "auto" });
+    // keep the fully unfolded name on one line at any width or font fallback
+    acro.style.fontSize = "";
+    var availW = acro.parentElement.clientWidth - 2 * parseFloat(getComputedStyle(acro.parentElement).paddingLeft || 0);
+    var fullW = Array.prototype.reduce.call(acro.children, function (a, el) { return a + el.offsetWidth; }, 0);
+    if (fullW > availW) acro.style.fontSize = (parseFloat(getComputedStyle(acro).fontSize) * availW / fullW * .97) + "px";
+    widths = Array.prototype.map.call(rests, function (r) { return r.offsetWidth; });
+    collapsed = Array.prototype.reduce.call(fixed, function (a, el) { return a + el.offsetWidth; }, 0) || 1;
+  }
+  function startScale() {
+    var avail = acro.parentElement.clientWidth - 2 * parseFloat(getComputedStyle(acro.parentElement).paddingLeft || 0);
+    var byHeight = (window.innerHeight * .42) / (acro.offsetHeight || 1);
+    return Math.max(1, Math.min(5, byHeight, (avail * .9) / collapsed));
+  }
+  // scale the name so it always fills, but never overflows, the line while it unfolds
+  var s0 = 1;
+  function fitAcro() {
+    var avail = acro.parentElement.clientWidth - 2 * parseFloat(getComputedStyle(acro.parentElement).paddingLeft || 0);
+    var cur = Array.prototype.reduce.call(acro.children, function (a, el) { return a + el.offsetWidth; }, 0) || 1;
+    var sc = Math.max(1, Math.min(s0, (avail * .98) / cur));
+    acro.style.transform = "scale(" + sc + ")";
+    acro.style.marginTop = ((sc - 1) * acro.offsetHeight) + "px";
+  }
+  measure();
+  s0 = startScale();
+  var nameTl = gsap.timeline({ onUpdate: fitAcro, scrollTrigger: { trigger: ".name", start: "top top", end: "+=160%", pin: ".name-stage", scrub: .6, invalidateOnRefresh: true,
+    onRefreshInit: function () { acro.style.transform = ""; acro.style.marginTop = ""; measure(); s0 = startScale(); }, onRefresh: fitAcro } });
+  nameTl.fromTo(rests, { width: 0 }, { width: function (i) { return widths[i]; }, stagger: .25, duration: 1, ease: "power2.inOut" }, 0)
+        .fromTo(rests, { opacity: 0 }, { opacity: 1, stagger: .25, duration: .08, ease: "none" }, 0)
+        .from(".name-copy p", { y: 30, stagger: .15, duration: .5, ease: ease }, 1.1)
+        .to({}, { duration: .5 });
+  fitAcro();
+
+  // VISION: photo opens from a card to full bleed while the line lights up
+  var visTl = gsap.timeline({ scrollTrigger: { trigger: ".vision", start: "top top", end: "+=170%", pin: ".vision-stage", scrub: .6 } });
+  visTl.to(".vision-media", { clipPath: "inset(0% 0% 0% 0% round 0px)", duration: 1, ease: "power2.inOut" })
+       .to("#visionH .w", { opacity: 1, stagger: .12, duration: .4, ease: "none" }, .8)
+       .to({}, { duration: .5 });
+
+  // MISSION + cards: rise in from a readable rest state
+  gsap.utils.toArray(".reveal").forEach(function (el) {
+    gsap.from(el, { y: 48, opacity: .2, duration: 1, ease: ease, scrollTrigger: { trigger: el, start: "top 88%" } });
+  });
+
+  // STAT: count up as it scrolls into view
+  var countEl = document.getElementById("count");
+  var counter = { v: 0 };
+  gsap.to(counter, { v: 53.8, ease: "none", onUpdate: function () { countEl.textContent = counter.v.toFixed(1); },
+    scrollTrigger: { trigger: ".stat", start: "top 85%", end: "center 55%", scrub: .4 } });
+
+  // BRANDS: vertical scroll drives a horizontal track
+  var track = document.getElementById("track");
+  function trackDist() { return Math.max(0, track.scrollWidth - window.innerWidth); }
+  gsap.to(track, { x: function () { return -trackDist(); }, ease: "none",
+    scrollTrigger: { trigger: ".brands", start: "top top", end: function () { return "+=" + trackDist(); }, pin: ".brands-stage", scrub: .6, invalidateOnRefresh: true } });
+  gsap.utils.toArray(".panel .logo img").forEach(function (img) {
+    gsap.from(img, { scale: .8, ease: "none", scrollTrigger: { trigger: ".brands", start: "top top", end: function () { return "+=" + trackDist(); }, scrub: true } });
+  });
+
+  // CTA: parallax photo and line reveal
+  gsap.from("#ctaH .ln > span", { yPercent: 110, duration: 1, ease: "power4.out", stagger: .12, scrollTrigger: { trigger: ".cta", start: "top 45%" } });
+  // The Stretch: GEDE widens, then the E's keep coming until the line is full (GEDEEEEEE.)
+  var stretch = document.getElementById("stretch"), es = document.getElementById("es");
+  var maxE = 1, shownE = 1;
+  function measureE() {
+    stretch.style.fontVariationSettings = '"wdth" 100';
+    es.textContent = "e";
+    var eW = es.getBoundingClientRect().width;
+    var used = stretch.getBoundingClientRect().width;
+    var avail = document.getElementById("ctaH").clientWidth;
+    maxE = Math.max(1, Math.min(16, 1 + Math.floor((avail - used) / eW)));
+    shownE = 1;
+  }
+  function paint(p) {
+    var wd = 62 + 38 * Math.min(1, p / .3);
+    stretch.style.fontVariationSettings = '"wdth" ' + wd.toFixed(1);
+    var n = 1 + Math.round(Math.max(0, (p - .3) / .7) * (maxE - 1));
+    if (n !== shownE) { shownE = n; es.textContent = new Array(n + 1).join("e"); }
+  }
+  measureE(); paint(0);
+  ScrollTrigger.create({ trigger: ".cta", start: "top top", end: "+=110%", pin: true, scrub: true,
+    onRefreshInit: measureE, onRefresh: function (st) { paint(st.progress); }, onUpdate: function (st) { paint(st.progress); } });
+
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
+  window.addEventListener("load", function () { ScrollTrigger.refresh(); });
+})();
+</script>
+
+</body>
+</html>
