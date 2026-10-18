@@ -132,6 +132,11 @@ body::before {
 .scrollcue { display: flex; align-items: center; gap: 12px; }
 .scrollcue .bar { width: 1.5px; height: 44px; background: var(--line); position: relative; overflow: hidden; }
 .scrollcue .bar::after { content: ""; position: absolute; left: 0; right: 0; height: 40%; background: var(--orange); animation: cue 1.8s cubic-bezier(.6,0,.3,1) infinite; }
+@media (max-width: 700px) {
+  .hero { min-height: 68svh; }
+  .hero-inner { padding-block: 104px 32px; gap: 22px; }
+  .hero h1 { font-size: 17vw; }
+}
 @keyframes cue { from { transform: translateY(-100%); } to { transform: translateY(260%); } }
 
 /* CLAIM: the line they say */
@@ -154,6 +159,12 @@ body::before {
 }
 .answer span { display: inline-block; }
 .claim small { font-family: var(--mono); font-size: 12px; color: var(--dim); letter-spacing: .08em; }
+@media (max-width: 700px) {
+  .claim-stage { gap: 20px; padding-block: 72px; }
+  .quote { font-size: 17vw; max-width: none; }
+  .claim small { margin-top: -4px; }
+  .answer { font-size: 15vw; margin-top: 12px; }
+}
 
 /* NAME */
 .name { background: var(--orange); color: var(--ink); overflow: hidden; }
@@ -376,8 +387,8 @@ footer .flogo { height: 44px; width: auto; }
         <span class="w">&ldquo;Anak</span> <span class="w">muda</span> <span class="w">banyak</span> <span class="w">bacot,</span> <span class="w">nggak</span> <span class="w">ada</span> <span class="w">hasil.&rdquo;</span>
         <span class="strike" aria-hidden="true"></span>
       </p>
-      <p class="answer" id="answer"><span>So we built</span> <span>something.</span></p>
       <small>Translation: young people talk a lot and deliver nothing.</small>
+      <p class="answer" id="answer"><span>So we built</span> <span>something.</span></p>
     </div>
   </section>
 
@@ -499,7 +510,7 @@ footer .flogo { height: 44px; width: auto; }
     </div>
     <div class="people">
       <div class="person reveal"><span class="role">Chief Executive Officer</span><span class="nm">Steven Glenn Shiendy</span></div>
-      <div class="person reveal"><span class="role">Chief Marketing Officer</span><span class="nm">Reyner Jandarmala</span></div>
+      <div class="person reveal"><span class="role">Chief Marketing Officer</span><span class="nm">Reyner Jan Darmala</span></div>
     </div>
   </section>
 
